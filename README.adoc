@@ -1,0 +1,49 @@
+Prerequisits : you will need climate api up and running
+
+Git Repo for Climate API : https://github.com/Pro-Wings/climate-api
+
+--------------
+
+Endpoints : 
+
+http://localhost:8080/test-circuit-breaker/pune   [GET] <- weather api
+http://localhost:8080/actuator/health  [GET] <- actuator 
+
+--------------
+
+How circuit breaker works : 
+
+The Circuit Breaker design pattern is a software engineering pattern that is used to handle faults and failures in distributed systems and services. It helps in building more resilient and fault-tolerant applications by providing a mechanism to gracefully handle and recover from transient or temporary failures, such as network issues or service unavailability. The pattern is inspired by the physical circuit breaker used in electrical systems, which can be switched on or off to protect electrical circuits from damage due to overloads or faults.
+
+In the context of the Circuit Breaker design pattern, there are three main states that represent the behavior of the circuit breaker:
+
+Closed State:
+
+In the closed state, the circuit breaker allows requests or operations to flow through as usual.
+It monitors the responses from the downstream service or system, and if these responses indicate that the system is functioning properly, the circuit breaker remains in the closed state.
+If a failure or error rate surpasses a predefined threshold (such as a certain percentage of errors or timeouts), the circuit breaker transitions to the open state.
+The closed state acts as a "normal" operation mode.
+Open State:
+
+In the open state, the circuit breaker prevents any requests or operations from being sent to the problematic service or system.
+The circuit breaker remains in the open state for a specified timeout or until a predefined condition is met, such as a certain period of time passing without errors.
+This state is used to give the failing service time to recover and prevent further requests from overwhelming it.
+After the timeout or condition is met, the circuit breaker transitions to the half-open state to test if the service has recovered.
+Half-Open State:
+
+In the half-open state, the circuit breaker allows a limited number of test requests or operations to flow through to the troubled service.
+It monitors the responses to these test requests, and if they indicate that the service has recovered and is functioning correctly, the circuit breaker transitions back to the closed state.
+If the test requests still result in errors or failures, the circuit breaker returns to the open state to allow more time for recovery.
+The half-open state acts as a "trial" phase to determine if the problematic service is healthy again.
+The Circuit Breaker pattern helps in improving system stability and performance by preventing continuous requests to a service that is already experiencing issues, which can lead to resource exhaustion and cascading failures. Instead, it provides a controlled way to temporarily isolate the faulty service and then gradually reintegrate it into the system when it is deemed healthy again.
+
+This pattern is commonly used in microservices architectures and other distributed systems where services may fail or become unresponsive, helping to maintain system resilience and prevent system-wide outages.
+
+-----
+Resources : 
+
+https://resilience4j.readme.io/docs/circuitbreaker#:~:text=The%20CircuitBreaker%20is%20implemented%20via,aggregate%20the%20outcome%20of%20calls.
+
+-----
+
+
