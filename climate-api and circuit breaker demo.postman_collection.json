@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "160e3fc6-608b-41e0-ae9a-57e0098af0e6",
+		"name": "climate-api and circuit breaker demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15805723"
+	},
+	"item": [
+		{
+			"name": "create climate Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"city\":\"Pune\",\r\n    \"country\":\"INDIA\",\r\n    \"countryCode\":\"IN\",\r\n    \"date\":\"24 May 2024\",\r\n    \"temperatureInFht\":200,\r\n    \"weather\":\"sunny\",\r\n    \"weatherDesc\":\"sunny day\",\r\n    \"tempFeelsLike\":300,\r\n    \"tempMin\": 125,\r\n    \"tempMax\": 400,\r\n    \"pressure\":80,\r\n    \"humidity\":48\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/prowings/climates",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"prowings",
+						"climates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get climate by city",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8084/prowings/climates/Pune",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"prowings",
+						"climates",
+						"Pune"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test citcuit breaker api",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test-circuit-breaker/Pune",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test-circuit-breaker",
+						"Pune"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "citcuit breaker actuator",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
