@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import com.prowings.model.Climate;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -20,7 +21,8 @@ public class InvokerService {
 //	@Value("${api.url}")
 	String url = "http://localhost:8084/prowings/climates/";
 	
-	@CircuitBreaker(name = "climateCircuitBreaker", fallbackMethod = "climateFallback")
+//	@CircuitBreaker(name = "climateCircuitBreaker", fallbackMethod = "climateFallback")
+	@Retry(name = "climateRetry",fallbackMethod = "climateRetryFallback")
 	public String getClimate(String city)
 	{
 		log.info("service method started!!!");
@@ -36,6 +38,14 @@ public class InvokerService {
 		
 		return "Climate service is temporarily unavailable!!!";
 
+	}
+
+	public String climateRetryFallback(Throwable t)
+	{
+		log.info("in fallback method of climate retry!!");
+		
+		return "Climate service is temporarily unavailable----- retry!!!";
+		
 	}
 	
 }
