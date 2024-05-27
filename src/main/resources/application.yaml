@@ -1,13 +1,11 @@
 spring:
-#  application.name: resilience4j-demo
   jackson.serialization.indent_output: true
-
 management:
   endpoints.web.exposure.include:
-    - '*'
+    - "*"
   endpoint.health.show-details: always
   health.circuitbreakers.enabled: true
-
+  health.ratelimiters.enabled: true
 resilience4j.circuitbreaker:
   configs:
     default:
@@ -19,15 +17,21 @@ resilience4j.circuitbreaker:
       waitDurationInOpenState: 5s
       failureRateThreshold: 50
       eventConsumerBufferSize: 10
-
 resilience4j.retry:
-    instances:
-        climateRetry:
-            maxAttempts: 3
-            waitDuration: 10s
-            enableExponentialBackoff: true
-            exponentialBackoffMultiplier: 2
-            retryExceptions:
-                - org.springframework.web.client.HttpServerErrorException
-                - java.io.IOException                
-                - java.lang.RuntimeException
+  instances:
+    climateRetry:
+      maxAttempts: 3
+      waitDuration: 10s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      retryExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+        - java.lang.RuntimeException
+resilience4j.ratelimiter:
+  instances:
+    climateRateLimiter:
+      limit-for-period: 5
+      limit-refresh-period: 15s
+      timeout-duration: 10s
+      register-health-indicator: true

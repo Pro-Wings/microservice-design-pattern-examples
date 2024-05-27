@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import com.prowings.model.Climate;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,7 +23,9 @@ public class InvokerService {
 	String url = "http://localhost:8084/prowings/climates/";
 	
 //	@CircuitBreaker(name = "climateCircuitBreaker", fallbackMethod = "climateFallback")
-	@Retry(name = "climateRetry",fallbackMethod = "climateRetryFallback")
+//	@Retry(name = "climateRetry",fallbackMethod = "climateRetryFallback")
+	
+	@RateLimiter(name = "climateRateLimiter")
 	public String getClimate(String city)
 	{
 		log.info("service method started!!!");

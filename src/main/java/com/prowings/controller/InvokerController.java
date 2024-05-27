@@ -29,4 +29,16 @@ public class InvokerController {
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 
+	
+	@GetMapping("/test-rate-limiter/{city}")
+	public ResponseEntity<String> getClimateByCity(@PathVariable String city)
+	{
+		log.info("request received to get city from climate api...");
+		
+		String response = invokerService.getClimate(city);
+		
+		log.info("request completed successfully...");
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+
 }
